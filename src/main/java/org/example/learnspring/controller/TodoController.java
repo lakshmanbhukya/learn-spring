@@ -29,7 +29,8 @@ public class TodoController {
     public  List<Todo> getMyTodos(){
         String username= SecurityContextHolder.getContext().getAuthentication().getName();
         User user= userRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("User not found"));
-        return todoService.getMyTodos(user.getId());
+        List<Todo> myTodos = todoService.getMyTodos(user.getId());
+        return myTodos;
     }
 
 
