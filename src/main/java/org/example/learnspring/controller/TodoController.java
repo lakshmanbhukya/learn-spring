@@ -33,6 +33,11 @@ public class TodoController {
         return myTodos;
     }
 
+    @GetMapping("/byId/{id}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable(value = "id") Long id){
+        return ResponseEntity.ok(todoService.getTodoById(id));
+    }
+
 
     @PostMapping("/addTask")
     // using @Valid we can validate the data before reaching the service layers, we
