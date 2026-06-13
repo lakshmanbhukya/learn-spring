@@ -1,6 +1,7 @@
 package org.example.learnspring.controller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.example.learnspring.dto.TodoRequest;
 import org.example.learnspring.model.Todo;
 import org.example.learnspring.model.User;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/todo")
 @CrossOrigin(origins = "*") //allows all the origins from the fronted frameworks
+@Slf4j // logging using system logging facade for java
 public class TodoController {
 
     private final TodoService todoService;
@@ -30,6 +32,9 @@ public class TodoController {
         String username= SecurityContextHolder.getContext().getAuthentication().getName();
         User user= userRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("User not found"));
         List<Todo> myTodos = todoService.getMyTodos(user.getId());
+        if(myTodos.isEmpty()){
+            log.info("No todos found for user {}",username);
+        }
         return myTodos;
     }
 

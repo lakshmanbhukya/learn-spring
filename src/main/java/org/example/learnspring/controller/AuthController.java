@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> signup(@Valid @RequestBody AuthRequest authRequest){
-        log.info("Attempting to register : {}", authRequest);
+        log.info("Attempting to register : {}", authRequest.getUsername());
         if(userRepository.findByUsername(authRequest.getUsername()).isPresent()){
             log.warn("Tired Username already exists");
             return ResponseEntity.ok("username already taken");
